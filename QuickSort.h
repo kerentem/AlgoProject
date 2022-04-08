@@ -1,6 +1,6 @@
 #pragma once
-#include "WeightedGraph.h"
 using namespace std;
+typedef  pair<int, int> edge;
 static int partition(vector< pair<int, edge> > arr, int start, int end)
 {
 

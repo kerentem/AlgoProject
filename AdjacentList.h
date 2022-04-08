@@ -12,8 +12,8 @@ struct ListNode
 class AdjacentList
 {
 private:
-	const std::string ERROR_OUT_OF_RANGE_VERTEX_INDEX = "Invalid vertex index";
-	const std::string ERROR_EMPTY_LIST = "List is empty";
+	//const std::string ERROR_OUT_OF_RANGE_VERTEX_INDEX = "Invalid vertex index";
+	//const std::string ERROR_EMPTY_LIST = "List is empty";
 	int m_Size;
 	ListNode* m_Head, * m_Tail;
 	ListNode* makeNewNode(int i_Vertex, float i_Weight, ListNode* io_Next = nullptr);

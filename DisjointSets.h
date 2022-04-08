@@ -1,9 +1,12 @@
 #pragma once
+#include <vector>
+using namespace std;
+
 class DisjointSets
 {
 private:
-	int* m_Parent;
-	int* m_Size;
+	vector<int> m_Parent;
+	vector<int> m_Size;
 	int m_NumOfSets;
 
 public:
