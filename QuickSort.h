@@ -1,7 +1,7 @@
 #pragma once
 using namespace std;
 typedef  pair<int, int> edge;
-static int partition(vector< pair<int, edge> > arr, int start, int end)
+static int partition(vector< pair<int, edge> >& arr, int start, int end)
 {
 
     int pivot = arr[start].first;
@@ -32,7 +32,7 @@ static int partition(vector< pair<int, edge> > arr, int start, int end)
     }
     return pivotIndex;
 }
-static void quickSort(vector< pair<int, edge> > arr, int start, int end)
+static void quickSort(vector< pair<int, edge> >& arr, int start, int end)
 {
 
     if (start >= end)

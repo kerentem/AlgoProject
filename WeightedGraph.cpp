@@ -100,12 +100,10 @@ int WeightedGraph::Kruskal()
 	int mstWeight = 0; 
 	DisjointSets ds(m_Size);
 
-	quickSort(m_allEdges, 1 , m_allEdges.size()-1);
+	quickSort(m_allEdges, 0 , m_allEdges.size()-1);
 
 	for (int i = 1;i <= m_Size;i++)
-	{
 		ds.MakeSet(i);
-	}
 
 	vector< pair<int, edge> >::iterator it;
 	for (it = m_allEdges.begin(); it != m_allEdges.end(); it++)
@@ -118,10 +116,6 @@ int WeightedGraph::Kruskal()
 
 		if (repU != repV)
 		{
-			// Current edge will be in the MST
-			// so print it
-			cout << u << " - " << v << endl;
-
 			mstWeight += it->first;
 			ds.Union(repU, repV);
 		}

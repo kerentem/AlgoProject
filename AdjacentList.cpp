@@ -5,7 +5,7 @@ AdjacentList::~AdjacentList()
 	this->freeList();
 }
 
-ListNode* AdjacentList::makeNewNode(int i_Vertex, float i_Weight, ListNode* io_Next)
+ListNode* AdjacentList::makeNewNode(int i_Vertex, int i_Weight, ListNode* io_Next)
 {
 	ListNode* newNode = new ListNode;
 
@@ -17,7 +17,7 @@ ListNode* AdjacentList::makeNewNode(int i_Vertex, float i_Weight, ListNode* io_N
 	return newNode;
 }
 
-void AdjacentList::ToHead(int i_Vertex, float i_Weight)
+void AdjacentList::ToHead(int i_Vertex, int i_Weight)
 {
 	ListNode* newHead = this->makeNewNode(i_Vertex, i_Weight, m_Head);
 
@@ -34,7 +34,7 @@ void AdjacentList::ToHead(int i_Vertex, float i_Weight)
 	m_Size++;
 }
 
-void AdjacentList::ToTail(int i_Vertex, float i_Weight)
+void AdjacentList::ToTail(int i_Vertex, int i_Weight)
 {
 	ListNode* newTail = this->makeNewNode(i_Vertex, i_Weight);
 
@@ -114,7 +114,7 @@ const AdjacentList& AdjacentList::operator=(const AdjacentList& org)
 
 	return *this;
 }
-const ListNode* AdjacentList::Find(int i_U)
+ListNode* AdjacentList::Find(int i_U)
 {
 	ListNode* currentNode = m_Head;
 
