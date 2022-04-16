@@ -6,7 +6,7 @@ struct ListNode
 {
 	int vertex;
 	int weight;
-	ListNode* next, * prev;
+	ListNode* next;
 };
 
 class AdjacentList
@@ -25,7 +25,7 @@ public:
 	AdjacentList(const AdjacentList& org);
 	~AdjacentList();
 	const AdjacentList& operator=(const AdjacentList& org);
-	//
+
 	// Methods
 	void ToHead(int i_Vertex, int i_Weight);
 	void ToTail(int i_Vertex, int i_Weight);
@@ -34,13 +34,9 @@ public:
 	void DeleteVertex(int i_Vertex);
 	void AppendList(const AdjacentList& i_List);
 	bool IsEmpty() { return m_Size == 0; }
-
 	ListNode* Find(int i_U);
-
 	const ListNode* operator[](int i_Index) const { return this->findByIndex(i_Index); }
-
 	ListNode* operator[](int i_Index) { return this->findByIndex(i_Index); }
-
 	const ListNode* getHeadNode() const { return m_Head; }
 	int getSize() const { return m_Size; }
 };

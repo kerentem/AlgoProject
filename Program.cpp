@@ -3,6 +3,7 @@ void executeProgram(const std::string& i_InputFileName, const std::string& i_Out
 {
 	WeightedGraph* listedGraph;
 	readGraphFromFile(i_InputFileName , listedGraph);
+	//צריך לבדוק פה אם הגרף קשיר ואם לא, לשלוח שגיאה ולהפסיק את התוכנית
 	cout << "Kruskal " << listedGraph->Kruskal() << endl;
 	cout << "Prim " << listedGraph->Prim() << endl;
 }
