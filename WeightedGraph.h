@@ -4,6 +4,7 @@
 #include "DisjointSets.h"
 #include <vector>
 #include "QuickSort.h"
+#include "PriorityQueue.h"
 using namespace std;
 
 class WeightedGraph

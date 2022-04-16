@@ -124,6 +124,7 @@ ListNode* AdjacentList::Find(int i_U)
 		{
 			break;
 		}
+		currentNode = currentNode->next;
 	}
 
 	return currentNode;

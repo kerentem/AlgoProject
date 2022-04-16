@@ -32,7 +32,7 @@ public:
 	void DeleteFromHead();
 	void DeleteFromTail();
 	void DeleteVertex(int i_Vertex);
-
+	void AppendList(const AdjacentList& i_List);
 	bool IsEmpty() { return m_Size == 0; }
 
 	ListNode* Find(int i_U);
@@ -41,7 +41,6 @@ public:
 
 	ListNode* operator[](int i_Index) { return this->findByIndex(i_Index); }
 
-	const ListNode* Front() const { return m_Head; }
-
-	void AppendList(const AdjacentList& i_List);
+	const ListNode* getHeadNode() const { return m_Head; }
+	int getSize() const { return m_Size; }
 };

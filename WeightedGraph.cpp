@@ -125,5 +125,51 @@ int WeightedGraph::Kruskal()
 }
 int WeightedGraph::Prim()
 {
-	return 0;
+	const int INFINIT = INT32_MAX;
+	PriorityQueue pq;
+	vector<bool> inT;
+	vector<int> min;
+	vector<int> parent;
+	int MSTWeight = 0;
+
+
+	//init
+	for (int i = 0;i < m_Size;i++)
+	{
+		min.push_back(INFINIT);
+		inT.push_back(false);
+		parent.push_back(-1);
+	}
+
+	//choose random v
+	min[0] = 0;
+	inT[0] = true;
+
+	pq.Build(min);
+
+	while (!pq.IsEmpty())
+	{
+		int u = pq.DeleteMin();
+		inT[u - 1] = true;
+		AdjacentList uNeighbors = this->GetAdjList(u);
+		for (int i = 0;i < uNeighbors.getSize();i++)
+		{
+			int v = uNeighbors[i]->vertex;
+			int edgeWeight = uNeighbors[i]->weight;
+
+			if (!inT[v - 1] && uNeighbors[i]->weight < min[v - 1])
+			{
+				min[v-1] = edgeWeight;
+				parent[v - 1] = u-1;
+				pq.DecreaseKey(v, min[v-1]);
+			}
+		}
+
+	}
+	//calculate MST weight
+	for (int i = 1;i < parent.size();i++)
+	{
+		MSTWeight += GetAdjList(i+1).Find(parent[i]+1)->weight;
+	}
+	return MSTWeight;
 }

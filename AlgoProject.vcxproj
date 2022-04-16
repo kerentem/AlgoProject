@@ -142,7 +142,7 @@
     <ClInclude Include="AdjacentList.h" />
     <ClInclude Include="DisjointSets.h" />
     <ClInclude Include="ErrorsHandler.h" />
-    <ClInclude Include="MinHeap.h" />
+    <ClInclude Include="PriorityQueue.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="QuickSort.h" />
     <ClInclude Include="WeightedGraph.h" />

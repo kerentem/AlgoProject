@@ -4,6 +4,7 @@ void executeProgram(const std::string& i_InputFileName, const std::string& i_Out
 	WeightedGraph* listedGraph;
 	readGraphFromFile(i_InputFileName , listedGraph);
 	cout << "Kruskal " << listedGraph->Kruskal() << endl;
+	cout << "Prim " << listedGraph->Prim() << endl;
 }
 
 void readGraphFromFile(const std::string& i_InputFileName, WeightedGraph*& io_ListedGraph)
