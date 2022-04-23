@@ -6,7 +6,7 @@ struct ListNode
 {
 	int vertex;
 	int weight;
-	ListNode* next;
+	ListNode* next , * prev;
 };
 
 class AdjacentList
