@@ -149,8 +149,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AdjacentList.cpp" />
+    <ClCompile Include="DirectedGraph.cpp" />
     <ClCompile Include="DisjointSets.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PriorityQueue.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="WeightedGraph.cpp" />
   </ItemGroup>

@@ -1,9 +1,20 @@
 #pragma once
 #include "WeightedGraph.h"
+using namespace std;
 
-void readGraphFromFile(const std::string& i_InputFileName,WeightedGraph*& io_ListsGraph);
-void executeProgram(const std::string& i_InputFileName, const std::string& i_OutputFileName);
-void readEdgesFromFile(std::ifstream& i_Data, WeightedGraph*& o_ListsGraph);
-
-
-
+class Program
+{
+private:
+	string m_i_InputFileName;
+	string m_i_OutputFileName;
+	WeightedGraph* m_io_ListsGraph;
+	pair<int, int>* m_deleteEdge;
+	int m_numOfVertices;
+	int m_numOfEdges;
+public:
+	Program(string inputFileName, string outputFileName);
+	~Program();
+	void readGraphFromFile();
+	void executeProgram();
+	void readEdgesFromFile(std::ifstream& i_Data);
+};

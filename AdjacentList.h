@@ -17,7 +17,7 @@ private:
 	int m_Size;
 	ListNode* m_Head, * m_Tail;
 	ListNode* makeNewNode(int i_Vertex, int i_Weight, ListNode* io_Next = nullptr);
-	ListNode* findByIndex(int i_VertexIndex) const;
+	
 	void freeList();
 
 public:
@@ -39,4 +39,5 @@ public:
 	ListNode* operator[](int i_Index) { return this->findByIndex(i_Index); }
 	const ListNode* getHeadNode() const { return m_Head; }
 	int getSize() const { return m_Size; }
+	ListNode* findByIndex(int i_VertexIndex) const;
 };

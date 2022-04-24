@@ -3,6 +3,7 @@
 
 int main(int argc, char** argv)
 {
-	std::string inputFileName = argv[1], outputFileName = argv[2];
-	executeProgram(inputFileName, outputFileName);
+	Program* p = new Program(argv[1], argv[2]);
+	p->executeProgram();
+	delete p;
 }

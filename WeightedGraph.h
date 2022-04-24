@@ -6,7 +6,7 @@
 #include "QuickSort.h"
 #include "PriorityQueue.h"
 using namespace std;
-
+enum class Color { white, gray, black };
 class WeightedGraph
 {
 private:
@@ -27,8 +27,20 @@ public:
 	bool IsAdjacent(int i_U, int i_V) const;
 	AdjacentList GetAdjList(int i_U) const;
 	void AddEdge(int i_U, int i_V, int i_Weight);
+	void AddDirctedEdge(int i_U, int i_V);
 	void RemoveEdge(int i_U, int i_V);
+	void RemoveDirctedEdge(int i_U, int i_V);
 	int GetSize() const { return m_Size; }
-	int Kruskal();
+	int Kruskal(bool isSorted);
 	int Prim();
+	bool isConnected();
+	void VISIT(const ListNode* u, AdjacentList* m_Vertices, int currentRoot, int* Root, Color* visited, vector<int>* endList, WeightedGraph* directedGraph);
+	vector<int>* DFS(vector<int>* orderList, AdjacentList* m_Vertices, int* Root, vector<int>* endList, WeightedGraph* directedGraph);
+	bool isBridge(pair<int,int>* edge);
+
+	void reverseGraph(WeightedGraph* directedGraph);
+
+
+
+
 };
