@@ -81,14 +81,25 @@ void Program::readGraphFromFile()
 void Program::readEdgesFromFile(std::ifstream& i_Data)
 {
 	int count = 1;
-	while (i_Data.eof() == false)
-	{			
-		int u, v, weight;
+						
+		std::string str;
+		int u = -1;
+		int v = -1;
+		int weight = -1;
+
+		std::getline(i_Data, str);
+
+
 		for (int i = 0; i < m_numOfEdges; i++)
 		{
 			try
 			{
-				i_Data >> u >> v >> weight;
+				if (str =="")
+					std::getline(i_Data, str);  //read data from file object and put it into string.
+				istringstream iss(str);
+				iss >> u >> v >> weight;
+				if ((u == -1 || v == -1 || weight == -1) && str!="")
+					throw std::invalid_argument(Error::INVALID_INPUT);
 			}
 			catch (std::exception& error)
 			{
@@ -97,14 +108,21 @@ void Program::readEdgesFromFile(std::ifstream& i_Data)
 
 			if ((u > m_io_ListsGraph->GetSize() || v > m_io_ListsGraph->GetSize()) || u < 1 || v < 1 || weight < 0)
 				throw std::invalid_argument(Error::INVALID_INPUT);
-
+			
 			m_io_ListsGraph->AddEdge(u, v, weight);
+			u = -1;
+			v = -1;
+			weight = -1;
+			str = "";
 		}
 
 		try
 		{
-
-			i_Data >> u >> v;
+			std::getline(i_Data, str);
+			istringstream iss(str);
+			iss >> u >> v >> weight;
+			if (u < 1 || v < 1 || weight != -1)
+				throw std::invalid_argument(Error::INVALID_INPUT);
 		}
 		catch (std::exception& error)
 		{
@@ -117,5 +135,5 @@ void Program::readEdgesFromFile(std::ifstream& i_Data)
 		m_deleteEdge = new pair<int, int>;
 		m_deleteEdge->first = u;
 		m_deleteEdge->second = v;
-		}
+		
 }

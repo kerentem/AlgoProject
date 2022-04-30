@@ -4,6 +4,14 @@
 int main(int argc, char** argv)
 {
 	Program* p = new Program(argv[1], argv[2]);
-	p->executeProgram();
-	delete p;
+	try
+	{
+		p->executeProgram();
+		delete p;
+	}
+	catch (const std::exception&)
+	{
+		cout << "exception";
+	}
+
 }

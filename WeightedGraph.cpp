@@ -204,6 +204,7 @@ bool WeightedGraph::isConnected() {
 		return false;
 }
 vector<int>* WeightedGraph::DFS(vector<int>* orderList, AdjacentList* m_Vertices, int* Root, vector<int>* endList, WeightedGraph* directedGraph) {
+
 	Color* visited = new Color[m_Size];
 	int currentRoot;
 	vector<int>* ConnectedList = new vector<int>;
@@ -214,17 +215,17 @@ vector<int>* WeightedGraph::DFS(vector<int>* orderList, AdjacentList* m_Vertices
 	for (int i = 0; i < m_Size; i++) {
 		if (visited[orderList->at(i)-1] == Color::white) {
 			currentRoot = orderList->at(i);
-			VISIT(m_Vertices->findByIndex(currentRoot-1), m_Vertices, currentRoot, Root, visited, endList, directedGraph);
+			VISIT(currentRoot, m_Vertices, currentRoot, Root, visited, endList, directedGraph);
 			ConnectedList->push_back(orderList->at(i));
-		}
-		return ConnectedList;
+		}	
 	}
+	return ConnectedList;
 }
-void WeightedGraph::VISIT(const ListNode * u, AdjacentList * m_Vertices, int currentRoot, int* Root, Color * visited, vector<int>* endList, WeightedGraph* directedGraph)
+void WeightedGraph::VISIT(int u, AdjacentList * m_Vertices, int currentRoot, int* Root, Color * visited, vector<int>* endList, WeightedGraph* directedGraph)
 {
-	Root[u->vertex - 1] = currentRoot;
-	visited[u->vertex - 1] = Color::gray;
-	AdjacentList adjacentList = GetAdjList(u->vertex);
+	Root[u - 1] = currentRoot;
+	visited[u - 1] = Color::gray;
+	AdjacentList adjacentList = m_Vertices[u-1];
 	const ListNode* node = adjacentList.getHeadNode();
 	while (node != nullptr)
 	{
@@ -233,16 +234,16 @@ void WeightedGraph::VISIT(const ListNode * u, AdjacentList * m_Vertices, int cur
 			if (directedGraph != nullptr)
 			{
 				//cout << u->vertex<< " "<< node->vertex << endl;
-				directedGraph->AddDirctedEdge(u->vertex, node->vertex);
+				directedGraph->AddDirctedEdge(u, node->vertex);
 			}
 				
-			VISIT(node, m_Vertices, currentRoot, Root, visited,endList,directedGraph);
+			VISIT(node->vertex, m_Vertices, currentRoot, Root, visited,endList,directedGraph);
 		}
 		node = node->next;
 	}
-	visited[u->vertex - 1] = Color::black;
+	visited[u - 1] = Color::black;
 	if (endList != nullptr)
-		endList->push_back(u->vertex);
+		endList->push_back(u);
 }
 
 bool WeightedGraph::isBridge(pair<int, int>* edge)
