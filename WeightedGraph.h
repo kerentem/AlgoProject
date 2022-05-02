@@ -34,14 +34,8 @@ public:
 	int Kruskal(bool isSorted);
 	int Prim();
 	bool isConnected();
-	   
-	void VISIT(int u, AdjacentList* m_Vertices, int currentRoot, int* Root, Color* visited, vector<int>* endList, WeightedGraph* directedGraph);
-	vector<int>* DFS(vector<int>* orderList, AdjacentList* m_Vertices, int* Root, vector<int>* endList, WeightedGraph* directedGraph);
+	WeightedGraph* reverseGraph(WeightedGraph* directedGraph);   
+	void VISIT(int u, AdjacentList* m_Vertices, int currentRoot, int* Root, Color* visited, vector<int>* endList, WeightedGraph* directedGraph, bool  isDirected);
+	vector<int>* DFS(vector<int>* orderList, AdjacentList* m_Vertices, int* Root, vector<int>* endList, WeightedGraph* directedGraph, bool  isDirected);
 	bool isBridge(pair<int,int>* edge);
-
-	void reverseGraph(WeightedGraph* directedGraph);
-
-
-
-
 };

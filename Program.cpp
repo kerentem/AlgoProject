@@ -1,29 +1,5 @@
 #include "Program.h"
-void Program::executeProgram()
-{
-	readGraphFromFile();
 
-	if (m_io_ListsGraph->isConnected() == true) { // is the graph connected?
-		cout << "Kruskal " << m_io_ListsGraph->Kruskal(false) << endl;
-		cout << "Prim " << m_io_ListsGraph->Prim() << endl;
-		
-		// delete edge and check 
-
-		// check if the edge is a bridge
-	
-		if (m_io_ListsGraph->isBridge(m_deleteEdge))
-			cout << "No MST" << endl;
-		else {
-			m_io_ListsGraph->RemoveEdge(m_deleteEdge->first, m_deleteEdge->second);
-			cout << "Kruskal " << m_io_ListsGraph->Kruskal(true) << endl;
-		}
-	}
-	else {
-		//////////////////////////////////////////////////////////////throw
-		cout << "The graph isn't connected !! "<< endl;
-	}
-	// remove edge and check!!!!!!!!!!!!!!!!!!!
-}
 Program::Program(string inputFileName, string outputFileName)
 {
 	m_i_InputFileName = inputFileName;
@@ -32,8 +8,41 @@ Program::Program(string inputFileName, string outputFileName)
 	pair<int, int>* deleteEdge = nullptr;
 }
 Program::~Program() {
+	if(!m_io_ListsGraph)
 	  delete m_io_ListsGraph;
+	if (!m_deleteEdge)
 	  delete m_deleteEdge;
+}
+void Program::executeProgram()
+{
+	string Kruskal_first;
+	string Kruskal_second;
+	string Prim_str;
+	readGraphFromFile();
+
+	if (m_io_ListsGraph->isConnected() == true) { // is the graph connected?
+		Kruskal_first = "Kruskal " + std::to_string(m_io_ListsGraph->Kruskal(false));
+		cout << Kruskal_first << endl;
+
+		Prim_str = "Prim " +std::to_string(m_io_ListsGraph->Prim());
+		cout << Prim_str << endl;
+
+		if (m_io_ListsGraph->isBridge(m_deleteEdge))
+			throw std::exception("The graph isn't connected , there is not MST");
+
+
+		else {
+			m_io_ListsGraph->RemoveEdge(m_deleteEdge->first, m_deleteEdge->second);
+			cout << m_io_ListsGraph->isConnected() << endl;
+
+			Kruskal_second = "Kruskal " + std::to_string(m_io_ListsGraph->Kruskal(false));
+			cout << Kruskal_second << endl;
+		}
+		writeToOutputFile(Kruskal_first + "\n" + Prim_str + "\n" + Kruskal_second + "\n");
+	}
+	else {
+		throw std::exception("The graph isn't connected !! ");
+	}
 }
 void Program::readGraphFromFile()
 {
@@ -136,4 +145,10 @@ void Program::readEdgesFromFile(std::ifstream& i_Data)
 		m_deleteEdge->first = u;
 		m_deleteEdge->second = v;
 		
+}
+void Program::writeToOutputFile(std::string st) { 
+	ofstream myfile;
+	myfile.open(m_i_OutputFileName);
+	myfile << st <<endl;
+	myfile.close();
 }

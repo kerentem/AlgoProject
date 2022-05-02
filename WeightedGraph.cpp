@@ -1,7 +1,9 @@
 #include "WeightedGraph.h"
 
 WeightedGraph::~WeightedGraph()
-{delete[] m_Vertices;}
+{
+	delete[] m_Vertices;
+}
 
 WeightedGraph::WeightedGraph(int i_Size)
 {MakeEmptyGraph(i_Size);}
@@ -82,6 +84,7 @@ void WeightedGraph::AddDirctedEdge(int i_U, int i_V)
 		throw std::out_of_range(Error::OUT_OF_RANGE_VERTEX_INDEX);
 	}
 	m_Vertices[i_U - 1].ToTail(i_V, 0);
+
 }
 void WeightedGraph::RemoveEdge(int i_U, int i_V)
 {
@@ -169,7 +172,7 @@ int WeightedGraph::Prim()
 		int u = pq.DeleteMin();
 		inT[u - 1] = true;
 		AdjacentList uNeighbors = this->GetAdjList(u);
-		for (int i = 0;i < uNeighbors.getSize();i++)
+		for (int i = 0;i < uNeighbors.getSize() ; i++)
 		{
 			int v = uNeighbors[i]->vertex;
 			int edgeWeight = uNeighbors[i]->weight;
@@ -192,19 +195,23 @@ int WeightedGraph::Prim()
 }
 
 bool WeightedGraph::isConnected() {
+	bool b;
 	vector<int>* orderList = new vector<int>;
 	for (int i = 0; i < m_Size; i++)
 		orderList->push_back(i+1);
 
 	int* Root = new int[m_Size];
-	vector<int>* countConnected = DFS(orderList, m_Vertices,Root,nullptr, nullptr);
+	vector<int>* countConnected = DFS(orderList, m_Vertices,Root,nullptr, nullptr,false);
 	if (countConnected->size() == 1) // Given graph is connected
-		return true;
+		b= true;
 	else //"Given graph is not connected
-		return false;
-}
-vector<int>* WeightedGraph::DFS(vector<int>* orderList, AdjacentList* m_Vertices, int* Root, vector<int>* endList, WeightedGraph* directedGraph) {
+		b=  false;
 
+	delete countConnected;
+	return b;
+}
+vector<int>* WeightedGraph::DFS(vector<int>* orderList, AdjacentList* m_Vertices, int* Root, vector<int>* endList, WeightedGraph* directedGraph, bool  isDirected) {
+	
 	Color* visited = new Color[m_Size];
 	int currentRoot;
 	vector<int>* ConnectedList = new vector<int>;
@@ -215,13 +222,15 @@ vector<int>* WeightedGraph::DFS(vector<int>* orderList, AdjacentList* m_Vertices
 	for (int i = 0; i < m_Size; i++) {
 		if (visited[orderList->at(i)-1] == Color::white) {
 			currentRoot = orderList->at(i);
-			VISIT(currentRoot, m_Vertices, currentRoot, Root, visited, endList, directedGraph);
+			VISIT(currentRoot, m_Vertices, currentRoot, Root, visited, endList, directedGraph,isDirected);
 			ConnectedList->push_back(orderList->at(i));
 		}	
 	}
+
+	delete[] visited;
 	return ConnectedList;
 }
-void WeightedGraph::VISIT(int u, AdjacentList * m_Vertices, int currentRoot, int* Root, Color * visited, vector<int>* endList, WeightedGraph* directedGraph)
+void WeightedGraph::VISIT(int u, AdjacentList * m_Vertices, int currentRoot, int* Root, Color * visited, vector<int>* endList, WeightedGraph* directedGraph, bool  isDirected)
 {
 	Root[u - 1] = currentRoot;
 	visited[u - 1] = Color::gray;
@@ -229,23 +238,19 @@ void WeightedGraph::VISIT(int u, AdjacentList * m_Vertices, int currentRoot, int
 	const ListNode* node = adjacentList.getHeadNode();
 	while (node != nullptr)
 	{
-		if (visited[node->vertex-1] == Color::white)
-		{
-			if (directedGraph != nullptr)
-			{
-				//cout << u->vertex<< " "<< node->vertex << endl;
-				directedGraph->AddDirctedEdge(u, node->vertex);
-			}
-				
-			VISIT(node->vertex, m_Vertices, currentRoot, Root, visited,endList,directedGraph);
+		if (directedGraph != nullptr && !m_Vertices[node->vertex - 1].Find(u)->flag && !isDirected) {
+			directedGraph->AddDirctedEdge(u, node->vertex);
+			//cout << u << " -- " <<  node->vertex << endl;
+			m_Vertices[u - 1].Find(node->vertex)->flag = true;
 		}
+		if (visited[node->vertex-1] == Color::white)	
+			VISIT(node->vertex, m_Vertices, currentRoot, Root, visited,endList,directedGraph,isDirected);
 		node = node->next;
 	}
 	visited[u - 1] = Color::black;
 	if (endList != nullptr)
 		endList->push_back(u);
 }
-
 bool WeightedGraph::isBridge(pair<int, int>* edge)
 {
 	WeightedGraph* directedGraph = new WeightedGraph(m_Size);
@@ -255,18 +260,20 @@ bool WeightedGraph::isBridge(pair<int, int>* edge)
 		orderList->push_back(i+1);
 	int* Root = new int[m_Size];
 
-	vector<int>* countConnected = DFS(orderList, m_Vertices, Root, endList, directedGraph);
+	vector<int>* countConnected = DFS(orderList, m_Vertices, Root, endList, directedGraph,false);
 	std::reverse(endList->begin(), endList->end());
-	reverseGraph(directedGraph);
-	countConnected = DFS(endList, m_Vertices, Root, endList, directedGraph);
+
+	WeightedGraph* oppGraph = reverseGraph(directedGraph);
+
+	countConnected = oppGraph->DFS(endList, oppGraph->m_Vertices, Root, nullptr, nullptr,true);
+	delete oppGraph;
+	delete directedGraph;
 	if (Root[edge->first - 1] == Root[edge->second - 1])
 		return false;
 	else
 		return true;
 }
-
-
-void WeightedGraph::reverseGraph(WeightedGraph* directedGraph) {
+WeightedGraph* WeightedGraph::reverseGraph(WeightedGraph* directedGraph) {
 	WeightedGraph* oppGraph = new WeightedGraph(directedGraph->GetSize());
 	//cout  << "--- " <<endl;
 
@@ -281,4 +288,5 @@ void WeightedGraph::reverseGraph(WeightedGraph* directedGraph) {
 			node = node->next;
 		}
 	}
+	return oppGraph;
 }

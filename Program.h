@@ -19,5 +19,6 @@ public:
 	~Program();
 	void readGraphFromFile();
 	void executeProgram();
+	void writeToOutputFile(std::string st);
 	void readEdgesFromFile(std::ifstream& i_Data);
 };

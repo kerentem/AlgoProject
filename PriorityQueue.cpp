@@ -118,10 +118,10 @@ int PriorityQueue::DeleteMin()
 	}
 void PriorityQueue::DecreaseKey(int i_Vertex, int i_NewKey)
 	{
-		/*if (!(i_Vertex > 0 && i_Vertex <= m_Size))
+		if (!(i_Vertex > 0 && i_Vertex <= m_VerticesMap.size()))
 		{
 			throw std::invalid_argument(ERROR_INVALID_KEY);
-		}*/
+		}
 
 		int index = m_VerticesMap[i_Vertex - 1];
 

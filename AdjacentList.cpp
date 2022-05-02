@@ -2,7 +2,8 @@
 
 AdjacentList::~AdjacentList()
 {
-	this->freeList();
+	if (!m_Head)
+		this->freeList();
 }
 
 ListNode* AdjacentList::makeNewNode(int i_Vertex, int i_Weight, ListNode* io_Next)
@@ -55,7 +56,8 @@ void AdjacentList::DeleteFromHead()
 {
 	if (this->IsEmpty())
 	{
-		//throw ERROR_EMPTY_LIST;
+
+		throw Error::ERROR_EMPTY_LIST;
 	}
 
 	if (m_Size == 1)
@@ -78,7 +80,7 @@ void AdjacentList::DeleteFromTail()
 {
 	if (this->IsEmpty())
 	{
-		//throw ERROR_EMPTY_LIST;
+		throw Error::ERROR_EMPTY_LIST;
 	}
 
 	if (m_Size == 1)
@@ -157,9 +159,9 @@ void AdjacentList::DeleteVertex(int i_Vertex)
 
 ListNode* AdjacentList::findByIndex(int i_VertexIndex) const
 {
-	if (i_VertexIndex < m_Size)
+	if (i_VertexIndex >= m_Size)
 	{
-		//throw std::out_of_range(ERROR_OUT_OF_RANGE_VERTEX_INDEX);
+		throw std::out_of_range(Error::OUT_OF_RANGE_VERTEX_INDEX);
 	}
 
 	ListNode* currentNode = m_Head;

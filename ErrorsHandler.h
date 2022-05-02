@@ -16,4 +16,5 @@ namespace Error
 	const std::string NEGATIVE_CYCLE = "There is a negative cycle";
 	const std::string INVALID_INPUT = "Input is not valid";
 	const std::string NO_MST = "The graph isn't connected , there is not MST";
+	const std::string ERROR_EMPTY_LIST = "empty list";
 }

@@ -1,11 +1,13 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include "ErrorsHandler.h"
 
 struct ListNode
 {
 	int vertex;
 	int weight;
+	bool flag = false;
 	ListNode* next , * prev;
 };
 
@@ -16,8 +18,8 @@ private:
 	//const std::string ERROR_EMPTY_LIST = "List is empty";
 	int m_Size;
 	ListNode* m_Head, * m_Tail;
+
 	ListNode* makeNewNode(int i_Vertex, int i_Weight, ListNode* io_Next = nullptr);
-	
 	void freeList();
 
 public:
