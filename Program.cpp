@@ -33,7 +33,6 @@ void Program::executeProgram()
 
 		else {
 			m_io_ListsGraph->RemoveEdge(m_deleteEdge->first, m_deleteEdge->second);
-			cout << m_io_ListsGraph->isConnected() << endl;
 
 			Kruskal_second = "Kruskal " + std::to_string(m_io_ListsGraph->Kruskal(false));
 			cout << Kruskal_second << endl;
@@ -47,10 +46,24 @@ void Program::executeProgram()
 void Program::readGraphFromFile()
 {
 	ifstream data(m_i_InputFileName);
+	std::string str;
+	istringstream iss,iss2;
 
 	try
 	{
-		data >> m_numOfVertices >> m_numOfEdges;
+		std::getline(data, str);
+		iss.str(str);
+		std::string str2="";
+		iss >> m_numOfVertices >> str2;
+		if (m_numOfVertices < 1 && str2=="")
+			throw std::invalid_argument(Error::INVALID_INPUT);
+
+
+		std::getline(data, str);
+		iss2.str(str);
+		iss2 >> m_numOfEdges >> str2;
+		if (m_numOfEdges < 1 && str2 == "")
+			throw std::invalid_argument(Error::INVALID_INPUT);
 	}
 	catch (std::exception& error)
 	{
@@ -107,7 +120,7 @@ void Program::readEdgesFromFile(std::ifstream& i_Data)
 					std::getline(i_Data, str);  //read data from file object and put it into string.
 				istringstream iss(str);
 				iss >> u >> v >> weight;
-				if ((u == -1 || v == -1 || weight == -1) && str!="")
+				if ((u < 1 || v < 1 || weight < 0) && str!="")
 					throw std::invalid_argument(Error::INVALID_INPUT);
 			}
 			catch (std::exception& error)

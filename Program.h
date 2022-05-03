@@ -12,8 +12,8 @@ private:
 	string m_i_OutputFileName;
 	WeightedGraph* m_io_ListsGraph;
 	pair<int, int>* m_deleteEdge;
-	int m_numOfVertices;
-	int m_numOfEdges;
+	int m_numOfVertices = -1;
+	int m_numOfEdges = -1;
 public:
 	Program(string inputFileName, string outputFileName);
 	~Program();
